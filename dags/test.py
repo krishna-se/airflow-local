@@ -52,4 +52,3 @@ with DAG(
             "--resource_hash", "{{ dag_run.conf['resource_hash'] }}"
         ],
     )
-

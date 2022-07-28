@@ -16,6 +16,7 @@ if namespace == 'default':
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
+    'start_date': datetime(2022, 1, 1),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -23,10 +24,8 @@ default_args = {
 }
 
 with DAG(
-        dag_id='test_dag_process',
+        dag_id='test_dag_id',
         schedule_interval=None,
-        depends_on_past=False,
-        start_date=datetime(2022, 1, 1),
         default_args=default_args
 ) as dag:
     KubernetesPodOperator(

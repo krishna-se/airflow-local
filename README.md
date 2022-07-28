@@ -9,8 +9,7 @@
     Docker restarts and the status indicator changes to green to indicate Kubernetes is running.
 ## Step 2: Update the kubeconfig file
 1. Update [config](/include/.kube/config) file.
-   1. Update `certificate-authority-data` under `-cluster` and `client-key-data` under `-user` based on your system kube config `$HOME/.kube/config`.
-
+   1. Update the `<certificate-authority-data>`, `<client-certificate-data>`, and `<client-key-data>` values in the config file with the values for your organization. Which is present at `$HOME/.kube/config`.
 ## Run your container.
 1. To start service `astro dev start` and to stop service `astro dev stop`
    1. Now go to http://localhost:8080/

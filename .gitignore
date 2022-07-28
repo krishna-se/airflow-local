@@ -5,7 +5,11 @@ __pycache__/
 
 # C extensions
 *.so
-
+venv
+.git
+.env
+airflow_settings.yaml
+astro
 # Distribution / packaging
 .Python
 build/

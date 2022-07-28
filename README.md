@@ -15,6 +15,8 @@
 1. To start service `astro dev start` and to stop service `astro dev stop`
    1. Now go to http://localhost:8080/
    
+Note: `image_pull_policy` in KubernateDagOperator should be `Never` else dag will start looking docker image at Docker Hub.
+
 ## You are all set :clap: :clap:
 
 ### Update [Dag image](./dags/test.py) and cmd based on you Dag-job

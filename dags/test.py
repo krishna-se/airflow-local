@@ -40,15 +40,15 @@ with DAG(
         name="airflow-test-pod",
         image_pull_policy="Never",
 
-        image="bulksend_test",
-        env_vars={
-            'V4_BASE_URL': '{{ var.value.V4_BASE_URL }}',
-        },
-        cmds=[
-            "python", "run.py",
-            "--X_REAL_IP", "{{ dag_run.conf['X_REAL_IP'] }}",
-            "--parallel_key", "{{ dag_run.conf['parallel_key']|tojson }}",
-            "--recipients", "{{ dag_run.conf['recipients']|tojson  }}",
-            "--resource_hash", "{{ dag_run.conf['resource_hash'] }}"
-        ],
+        image="hello-world",
+        # env_vars={
+        #     'V4_BASE_URL': '{{ var.value.V4_BASE_URL }}',
+        # },
+        # cmds=[
+        #     "python", "run.py",
+        #     "--X_REAL_IP", "{{ dag_run.conf['X_REAL_IP'] }}",
+        #     "--parallel_key", "{{ dag_run.conf['parallel_key']|tojson }}",
+        #     "--recipients", "{{ dag_run.conf['recipients']|tojson  }}",
+        #     "--resource_hash", "{{ dag_run.conf['resource_hash'] }}"
+        # ],
     )

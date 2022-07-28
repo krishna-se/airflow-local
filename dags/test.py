@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.configuration import conf
@@ -13,21 +13,35 @@ if namespace == 'default':
     config_file = 'include/.kube/config'
     in_cluster = False
 
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
+
 with DAG(
         dag_id='test_dag_process',
         schedule_interval=None,
-        owner='airflow',
         depends_on_past=False,
         start_date=datetime(2022, 1, 1),
-        email_on_failure=False,
-        retries=1,
+        default_args=default_args
 ) as dag:
     KubernetesPodOperator(
         namespace=namespace,
-        image="bulksend_test",
         labels={},
+        get_logs=True,
+        task_id="task-one",
+        in_cluster=in_cluster,
+        cluster_context="docker-desktop",
+        config_file=config_file,
+        is_delete_operator_pod=True,
         name="airflow-test-pod",
         image_pull_policy="Never",
+
+        image="bulksend_test",
         env_vars={
             'V4_BASE_URL': '{{ var.value.V4_BASE_URL }}',
         },
@@ -38,10 +52,4 @@ with DAG(
             "--recipients", "{{ dag_run.conf['recipients']|tojson  }}",
             "--resource_hash", "{{ dag_run.conf['resource_hash'] }}"
         ],
-        task_id="task-one",
-        in_cluster=in_cluster,
-        cluster_context="docker-desktop",
-        config_file=config_file,
-        is_delete_operator_pod=True,
-        get_logs=True,
     )
